@@ -1,0 +1,7 @@
+---
+- name: "Installing Docker"
+  hosts: docker
+  roles:
+    - docker
+  become: true
+

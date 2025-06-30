@@ -1,0 +1,4 @@
+1. Add hosts to hosts.yaml
+2. Host should be in the group docker
+3. run:
+   ansible-playbook -i hosts.yml docker.yml

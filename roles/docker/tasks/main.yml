@@ -1,0 +1,9 @@
+---
+- debug:
+    msg: "OS: {{ ansible_facts['os_family'] }}"
+
+- name: "Check OS"
+  include_tasks: "{{ ansible_facts['os_family'] }}.yml"
+
+- name: "Configure"
+  import_tasks: "configure.yml"

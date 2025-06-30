@@ -1,0 +1,62 @@
+- debug:
+    msg: "Debian-liked found, {{ ansible_facts }}" #['distribution'] }}, {{ ansible_facts['distribution_major_version'] }}, {{ ansible_facts['distribution_version'] }}"
+
+- name: "Debian | get Debian version"
+  set_fact:
+    os_ver: "{{ ansible_facts['distribution_major_version'] }}"
+  when: "ansible_facts['distribution'] == 'Debian'"
+
+- name: "Debian | get Ubuntu version"
+  set_fact:
+    os_ver: "{{ ansible_facts['distribution_version'] }}"
+  when: "ansible_facts['distribution'] == 'Ubuntu'"
+
+- name: "Debian | remove old packages"
+  apt:
+    name:
+      - docker.io
+      - docker-doc
+      - docker-compose
+      - docker-compose-v2
+      - podman-docker
+      - containerd
+      - runc
+    state: "absent"
+    autoremove: true
+    autoclean: true
+
+- name: "Debian"
+  uri:
+    url: "https://download.docker.com/linux/ubuntu/gpg"
+    dest: "/etc/apt/keyrings/docker.asc"
+    owner: "root"
+    group: "root"
+    mode: '0644'
+
+- name: "Debian | create repo-file"
+  template:
+    src: "docker.list"
+    dest: "/etc/apt/sources.list.d/docker.list"
+    owner: "root"
+    group: "root"
+    mode: '0644'
+  when: "ansible_facts['distribution'] == 'Ubuntu'"
+
+- name: "Debian | Install docker"
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+      - nginx
+      - certbot
+      - python3-certbot-nginx
+      - vim
+      - nmap
+      - tcpdump
+      - jq
+      - wget
+      - curl
+    update_cache: true

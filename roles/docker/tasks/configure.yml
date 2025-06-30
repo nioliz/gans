@@ -1,0 +1,7 @@
+---
+- name: "Configure | Starting docker"
+  systemd_service:
+    name: "docker"
+    enabled: true
+    state: "started"
+  become: true
