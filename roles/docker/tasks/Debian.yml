@@ -32,6 +32,8 @@
     owner: "root"
     group: "root"
     mode: '0644'
+  # TODO: Error 304 is OK
+  ignore_errors: true
 
 - name: "Debian | create repo-file"
   template:
@@ -53,10 +55,4 @@
       - nginx
       - certbot
       - python3-certbot-nginx
-      - vim
-      - nmap
-      - tcpdump
-      - jq
-      - wget
-      - curl
     update_cache: true
